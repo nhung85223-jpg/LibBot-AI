@@ -1002,7 +1002,6 @@ function loadChatHistory() {
     }
 
     async function handleUserSendMessage() {
-        const message = input.value.trim();
         const userText = chatInput.value.trim();
         if (userText === '') return;
 
@@ -1034,7 +1033,7 @@ function loadChatHistory() {
     
             const response =
                 await fetch(
-                    'https://libbot-ai.onrender.com/api/chat',
+                    '/api/chat',
                     {
                         method: 'POST',
     

@@ -1,4 +1,8 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({
+    path: path.join(__dirname, '..', '.env'),
+    quiet: true
+});
 
 const express = require('express');
 const cors = require('cors');
@@ -22,8 +26,11 @@ const API_KEYS = [
 
     process.env.GEMINI_API_KEY_4
 
-];
-console.log(API_KEYS);
+].filter(Boolean);
+
+// Model cũ gemini-1.5-flash đã ngừng trên v1beta — đổi qua .env nếu cần
+const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+
 let currentKeyIndex = 0;
 
 
@@ -53,7 +60,7 @@ thân thiện và chính xác.
         `;
 
         const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${currentKey}`,
+            `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${currentKey}`,
             {
                 method: 'POST',
 
@@ -121,12 +128,29 @@ thân thiện và chính xác.
 
 
 // ================================
+// STATIC FRONTEND
+// ================================
+
+app.use(express.static(path.join(__dirname, '..')));
+
+// ================================
 // START SERVER
 // ================================
 
-app.listen(3000, () => {
+const PORT = Number(process.env.PORT) || 3000;
 
-    console.log(
-        'Server running at http://localhost:3000'
-    );
+const server = app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+    console.log('Nhấn Ctrl+C để dừng server.');
+});
+
+server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+        console.error(`\nCổng ${PORT} đã bị chiếm (process Node cũ vẫn chạy).`);
+        console.error('Tìm PID:  netstat -ano | findstr ":3000"');
+        console.error('Dừng:    taskkill /PID <pid> /F\n');
+    } else {
+        console.error(err);
+    }
+    process.exit(1);
 });
