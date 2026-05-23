@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LibBot - Trợ lý Thư viện Thông minh & Tra cứu Tài liệu</title>
+    <meta name="description" content="LibBot - Trợ lý thư viện ảo thông minh tích hợp giọng nói tiếng Việt, tra cứu tài liệu quốc gia và đăng ký dịch vụ trực tuyến.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+    <!-- Dynamic Ambient Background Bubbles -->
+    <div class="bg-bubble-container">
+        <div class="bubble bubble-1"></div>
+        <div class="bubble bubble-2"></div>
+        <div class="bubble bubble-3"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-logo">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="brand-info">
+                    <h2>LibBot</h2>
+                    <span>Smart Assistant</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-tab="chat-tab" id="nav-chat">
+                    <i class="fa-solid fa-comments"></i>
+                    <span>Trợ lý Ảo AI</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="search-tab" id="nav-search">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>Tra cứu Tài liệu</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="services-tab" id="nav-services">
+                    <i class="fa-solid fa-id-card"></i>
+                    <span>Dịch vụ Thẻ & Quy định</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="map-tab" id="nav-map">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    <span>Sơ đồ Thư viện</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="connection-status">
+                    <span class="status-dot online"></span>
+                    <span class="status-text" id="api-status">API TVQG Online</span>
+                </div>
+                <p>&copy; 2026 LibBot System v1.5</p>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header Section -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-toggle" id="mobile-menu-btn" aria-label="Mở menu">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="school-selector">
+                        <label for="school-select" class="sr-only">Chọn trường học</label>
+                        <i class="fa-solid fa-school school-icon"></i>
+                        <select id="school-select" aria-label="Chọn trường học">
+                            <option value="national">Thư viện Quốc gia Việt Nam</option>
+                            <option value="hust">Đại học Bách Khoa Hà Nội</option>
+                            <option value="vnu">Đại học Quốc gia Hà Nội</option>
+                            <option value="ams">THPT Chuyên Hà Nội - Amsterdam</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="header-actions">
+                    <!-- Speech Status Widget -->
+                    <div class="speech-widget" id="speech-indicator" title="Nhấp để bật/tắt giọng nói của LibBot">
+                        <i class="fa-solid fa-volume-high"></i>
+                        <span>Giọng nói: Bật</span>
+                    </div>
+
+                    <!-- Theme Toggle -->
+                    <button class="theme-toggle" id="theme-toggle-btn" aria-label="Chuyển chế độ sáng/tối" title="Chuyển chế độ sáng/tối">
+                        <i class="fa-solid fa-sun icon-sun"></i>
+                        <i class="fa-solid fa-moon icon-moon"></i>
+                    </button>
+
+                    <!-- User Profile Mock -->
+                    <div class="user-profile">
+                        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80" alt="Avatar người dùng" class="avatar">
+                        <div class="profile-text">
+                            <span class="user-name">Khách thăm</span>
+                            <span class="user-role">Độc giả</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content Panels -->
+            <div class="content-viewport">
+                
+                <!-- 1. AI CHAT TAB -->
+                <section class="tab-panel active" id="chat-tab">
+                    <div class="chat-wrapper">
+                        <!-- Chat Main Screen -->
+                        <div class="chat-container">
+                            <!-- Chat Area Header -->
+                            <div class="chat-header">
+                                <div class="mascot-avatar">
+                                    <div class="mascot-face" id="mascot-eye-anim">
+                                        <div class="mascot-eyes">
+                                            <div class="eye"></div>
+                                            <div class="eye"></div>
+                                        </div>
+                                        <div class="mascot-mouth"></div>
+                                    </div>
+                                    <span class="pulse-ring"></span>
+                                </div>
+                                <div class="chatbot-title">
+                                    <h3>LibBot (AI Assistant)</h3>
+                                    <p id="bot-status-text">Đang trực tuyến • Sẵn sàng hỗ trợ bạn</p>
+                                </div>
+                            </div>
+
+                            <!-- Chat Messages History -->
+                            <div class="chat-history" id="chat-messages">
+                                <!-- Bot greeting will be generated dynamically -->
+                                <div class="message-bubble bot-message">
+                                    <div class="message-icon">
+                                        <i class="fa-solid fa-robot"></i>
+                                    </div>
+                                    <div class="message-content">
+                                        <p>Chào mừng bạn đến với <strong>Thư viện Quốc gia Việt Nam</strong>! Tôi là <strong>LibBot</strong> - trợ lý số thông minh của bạn. Cần tôi giúp tìm kiếm tài liệu, đăng ký thẻ hay trả lời thông tin gì không?</p>
+                                        <span class="message-time">11:15</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Suggestions Row -->
+                            <div class="suggestions-container">
+                                <span class="suggestions-label"><i class="fa-solid fa-wand-magic-sparkles"></i> Gợi ý nhanh:</span>
+                                <div class="suggestions-scroll" id="quick-suggestions">
+                                    <button class="suggest-chip" data-query="Giờ mở cửa">🕒 Giờ mở cửa</button>
+                                    <button class="suggest-chip" data-query="Hướng dẫn làm thẻ thư viện">💳 Làm thẻ thư viện</button>
+                                    <button class="suggest-chip" data-query="Tìm sách Lão Hạc">📚 Tìm sách "Lão Hạc"</button>
+                                    <button class="suggest-chip" data-query="Quy định mượn trả tài liệu">🔄 Quy định mượn/trả</button>
+                                    <button class="suggest-chip" data-query="Thư viện trường ở đâu?">📍 Sơ đồ thư viện</button>
+                                </div>
+                            </div>
+
+                            <!-- Message Input Box -->
+                            <div class="chat-input-bar">
+                                <button class="input-action-btn" id="voice-input-btn" title="Nói tiếng Việt (Speech-to-Text)">
+                                    <i class="fa-solid fa-microphone"></i>
+                                </button>
+                                <div class="input-wrapper">
+                                    <input type="text" id="chat-input-field" placeholder="Nhập câu hỏi của bạn tại đây hoặc nhấn nút mic để nói..." autocomplete="off">
+                                    <button class="clear-input-btn" id="clear-text-btn" title="Xóa nội dung">
+                                        <i class="fa-solid fa-circle-xmark"></i>
+                                    </button>
+                                </div>
+                                <button class="send-message-btn" id="send-chat-btn" title="Gửi tin nhắn" aria-label="Gửi tin nhắn">
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Chat Sidebar/Quick Info -->
+                        <aside class="chat-info-sidebar">
+                            <div class="info-card quick-stats">
+                                <h4>📚 Tổng quan thư viện</h4>
+                                <div class="stats-grid">
+                                    <div class="stat-item">
+                                        <span class="stat-num" id="stat-books">2.5M+</span>
+                                        <span class="stat-label">Tài liệu số & Bản in</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-num" id="stat-active">15K+</span>
+                                        <span class="stat-label">Độc giả tích cực</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="info-card library-hours">
+                                <h4>🕒 Thời gian làm việc</h4>
+                                <ul class="hours-list">
+                                    <li>
+                                        <span class="day">Thứ 2 - Thứ 6</span>
+                                        <span class="time" id="hours-weekdays">08:00 - 20:00</span>
+                                    </li>
+                                    <li>
+                                        <span class="day">Thứ Bảy</span>
+                                        <span class="time" id="hours-saturday">09:00 - 17:00</span>
+                                    </li>
+                                    <li>
+                                        <span class="day">Chủ Nhật & Lễ</span>
+                                        <span class="time status-closed" id="hours-sunday">Đóng cửa</span>
+                                    </li>
+                                </ul>
+                                <div class="hours-status-badge open" id="current-open-status">
+                                    <i class="fa-solid fa-circle-check"></i> Đang mở cửa
+                                </div>
+                            </div>
+
+                            <div class="info-card announcements">
+                                <h4>📢 Thông báo mới nhất</h4>
+                                <div class="announcement-item">
+                                    <span class="date">Hôm nay</span>
+                                    <p>Nâng cấp cổng tra cứu trực tuyến kết nối với Thư viện Quốc gia Việt Nam thành công.</p>
+                                </div>
+                                <div class="announcement-item">
+                                    <span class="date">3 ngày trước</span>
+                                    <p>Bổ sung hơn 500 đầu sách ngoại văn ngành công nghệ và AI mới nhất tháng 5/2026.</p>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </section>
+
+                <!-- 2. BOOK CATALOG SEARCH TAB -->
+                <section class="tab-panel" id="search-tab">
+                    <div class="section-header">
+                        <h2>Tra cứu và Tìm kiếm Tài liệu</h2>
+                        <p>Hệ thống kết nối thời gian thực với kho cơ sở dữ liệu số của Thư viện Quốc gia Việt Nam (Mô phỏng API)</p>
+                    </div>
+
+                    <!-- Search Controls -->
+                    <div class="search-box-container">
+                        <div class="search-main-bar">
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                            <input type="text" id="book-search-input" placeholder="Tìm theo tên sách, tác giả, thể loại, từ khóa hoặc mã ISBN...">
+                            <button class="search-submit-btn" id="search-books-btn">Tìm kiếm</button>
+                        </div>
+                        
+                        <div class="search-filters">
+                            <div class="filter-group">
+                                <label for="filter-category"><i class="fa-solid fa-tags"></i> Thể loại:</label>
+                                <select id="filter-category">
+                                    <option value="all">Tất cả thể loại</option>
+                                    <option value="literature">Văn học & Nghệ thuật</option>
+                                    <option value="technology">Công nghệ & Máy tính</option>
+                                    <option value="science">Khoa học tự nhiên & Kỹ thuật</option>
+                                    <option value="history">Lịch sử & Địa lý</option>
+                                    <option value="economics">Kinh tế & Quản lý</option>
+                                </select>
+                            </div>
+
+                            <div class="filter-group">
+                                <label for="filter-status"><i class="fa-solid fa-circle-info"></i> Trạng thái:</label>
+                                <select id="filter-status">
+                                    <option value="all">Tất cả trạng thái</option>
+                                    <option value="available">Sẵn sàng mượn</option>
+                                    <option value="reading-only">Đọc tại chỗ</option>
+                                    <option value="borrowed">Đang được mượn</option>
+                                </select>
+                            </div>
+
+                            <div class="filter-group">
+                                <label for="filter-source"><i class="fa-solid fa-server"></i> Nguồn dữ liệu:</label>
+                                <select id="filter-source">
+                                    <option value="all">Kho đồng bộ chung</option>
+                                    <option value="school">Kho thư viện trường</option>
+                                    <option value="national">Kho Thư viện Quốc gia Việt Nam</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Search Results Info -->
+                    <div class="results-meta">
+                        <span id="results-count">Hiển thị 12 tài liệu phổ biến</span>
+                        <span class="sync-indicator"><i class="fa-solid fa-rotate"></i> Đã đồng bộ 2 phút trước</span>
+                    </div>
+
+                    <!-- Book Catalog Grid -->
+                    <div class="books-grid" id="books-results-container">
+                        <!-- Book Cards will be loaded dynamically by JS -->
+                    </div>
+
+                    <!-- Pagination Controls -->
+                    <div class="pagination-container" id="pagination-controls" style="display: flex; text-align: center; margin-top: 30px; gap: 15px; justify-content: center; align-items: center;">
+                        <button id="prev-page-btn" class="card-action-btn secondary" style="min-width:120px;" disabled><i class="fa-solid fa-chevron-left"></i> Trang trước</button>
+                        <span id="current-page-indicator" style="font-weight: 600; font-size: 16px; color: var(--text-primary);">Trang 1</span>
+                        <button id="next-page-btn" class="card-action-btn secondary" style="min-width:120px; border-color:var(--primary-color);">Trang sau <i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                </section>
+
+                <!-- 3. SERVICES & DIGITAL CARD TAB -->
+                <section class="tab-panel" id="services-tab">
+                    <div class="services-wrapper">
+                        <!-- Left Panel: Card Registration Form -->
+                        <div class="services-card form-container">
+                            <h3><i class="fa-solid fa-id-card"></i> Đăng ký Thẻ Thư viện Số (E-Card)</h3>
+                            <p class="form-desc">Đăng ký thẻ chỉ trong 30 giây để mượn sách trực tuyến và tra cứu kho tài liệu đầy đủ của trường học và Thư viện Quốc gia Việt Nam.</p>
+                            
+                            <form id="card-registration-form" class="custom-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="reg-fullname">Họ và Tên độc giả <span class="required">*</span></label>
+                                        <input type="text" id="reg-fullname" placeholder="Nguyễn Văn A" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="reg-student-id">Mã số học sinh / sinh viên / độc giả <span class="required">*</span></label>
+                                        <input type="text" id="reg-student-id" placeholder="HS-2026123" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="reg-class">Lớp / Khoa / Đơn vị <span class="required">*</span></label>
+                                        <input type="text" id="reg-class" placeholder="Lớp 11A1 / Khoa CNTT" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="reg-email">Email liên hệ <span class="required">*</span></label>
+                                        <input type="email" id="reg-email" placeholder="student@school.edu.vn" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="reg-phone">Số điện thoại di động <span class="required">*</span></label>
+                                        <input type="tel" id="reg-phone" placeholder="0987654321" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="reg-card-type">Loại thẻ muốn làm</label>
+                                        <select id="reg-card-type">
+                                            <option value="standard">Thẻ Đọc & Mượn Tiêu chuẩn (Miễn phí)</option>
+                                            <option value="research">Thẻ Nghiên cứu Thư viện Quốc gia (+Tài nguyên số đặc biệt)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group checkbox-group">
+                                    <input type="checkbox" id="reg-terms" required>
+                                    <label for="reg-terms">Tôi cam kết tuân thủ nghiêm ngặt mọi Quy chế hoạt động và bảo quản tài liệu của Thư viện.</label>
+                                </div>
+
+                                <button type="submit" class="submit-btn" id="submit-reg-btn">
+                                    <i class="fa-solid fa-circle-check"></i> Phát hành thẻ ngay lập tức
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Right Panel: Card Flip Visualization -->
+                        <div class="services-card card-preview-container">
+                            <h3>🔍 Thẻ thư viện của bạn</h3>
+                            <p class="preview-desc">Sau khi gửi thông tin, thẻ số của bạn sẽ xuất hiện dưới dạng thẻ 3D động với mã định danh độc quyền.</p>
+                            
+                            <div class="library-card-3d" id="library-card-visual">
+                                <div class="card-inner">
+                                    <!-- Card Front -->
+                                    <div class="card-front">
+                                        <div class="card-glow"></div>
+                                        <div class="card-header">
+                                            <div class="card-school-info">
+                                                <i class="fa-solid fa-graduation-cap font-logo"></i>
+                                                <div>
+                                                    <h5 id="card-school-name">THƯ VIỆN QUỐC GIA VN</h5>
+                                                    <span>THẺ ĐỘC GIẢ SỐ</span>
+                                                </div>
+                                            </div>
+                                            <div class="card-chip"></div>
+                                        </div>
+
+                                        <div class="card-holder-info">
+                                            <div class="holder-avatar-mock">
+                                                <i class="fa-solid fa-user"></i>
+                                            </div>
+                                            <div class="holder-details">
+                                                <span class="label">HỌ VÀ TÊN</span>
+                                                <h4 id="card-display-name">NGUYỄN VĂN A</h4>
+                                                <span class="label">MÃ SỐ ĐỘC GIẢ</span>
+                                                <h4 id="card-display-id">HS-2026XXXX</h4>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-footer">
+                                            <div>
+                                                <span class="label">LOẠI THẺ</span>
+                                                <span class="val" id="card-display-type">Standard E-Card</span>
+                                            </div>
+                                            <div>
+                                                <span class="label">HẠN SỬ DỤNG</span>
+                                                <span class="val" id="card-display-exp">22/05/2027</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Card Back -->
+                                    <div class="card-back">
+                                        <div class="card-back-strip"></div>
+                                        <div class="card-qr-container">
+                                            <div class="qr-code-box" id="card-qr-placeholder">
+                                                <i class="fa-solid fa-qrcode fa-5x"></i>
+                                            </div>
+                                            <p>Quét mã QR tại cổng kiểm soát tự động để vào thư viện và thực hiện mượn sách.</p>
+                                        </div>
+                                        <div class="card-back-footer">
+                                            <span>Mã vạch:</span>
+                                            <span class="barcode-num" id="card-display-barcode">0000000000000</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card-actions" id="card-action-buttons" style="display: none;">
+                                <button class="card-action-btn secondary" id="flip-card-btn"><i class="fa-solid fa-rotate"></i> Lật thẻ</button>
+                                <button class="card-action-btn primary" id="download-card-btn"><i class="fa-solid fa-download"></i> Lưu thẻ về máy</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Library Rules & Borrowing Info -->
+                    <div class="rules-container">
+                        <h3><i class="fa-solid fa-circle-info"></i> Quy định mượn trả & Mức phạt chi tiết</h3>
+                        <div class="rules-grid">
+                            <div class="rule-card">
+                                <div class="rule-icon"><i class="fa-solid fa-book"></i></div>
+                                <h4>Hạn mức mượn</h4>
+                                <p>Độc giả sở hữu thẻ Standard được mượn tối đa <strong>3 cuốn sách</strong> trong <strong>14 ngày</strong>. Thẻ Nghiên cứu được mượn tối đa <strong>7 cuốn</strong> trong <strong>30 ngày</strong>.</p>
+                            </div>
+                            <div class="rule-card">
+                                <div class="rule-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
+                                <h4>Quy định quá hạn</h4>
+                                <p>Phí quá hạn áp dụng là <strong>2.000 VNĐ / ngày / cuốn sách</strong> đối với tài liệu thường và <strong>5.000 VNĐ / ngày</strong> với sách quý hiếm hoặc giáo trình giới hạn.</p>
+                            </div>
+                            <div class="rule-card">
+                                <div class="rule-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                                <h4>Bảo quản tài liệu</h4>
+                                <p>Độc giả làm mất sách phải đền bù sách mới hoặc đóng phạt tương đương <strong>200% giá trị cuốn sách</strong> tại thời điểm phát hành. Không viết vẽ, xé trang sách.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. INTERACTIVE LIBRARY MAP TAB -->
+                <section class="tab-panel" id="map-tab">
+                    <div class="map-wrapper">
+                        <!-- Left Panel: Responsive Interactive SVG Map -->
+                        <div class="map-view-card">
+                            <h3><i class="fa-solid fa-compass"></i> Sơ đồ tương tác Phân khu Thư viện</h3>
+                            <p>Nhấp vào các phân khu trên sơ đồ để xem thông tin chi tiết, chỉ dẫn và danh mục tài liệu đặc thù.</p>
+                            
+                            <div class="interactive-map-container">
+                                <!-- Modern Interactive SVG Blueprint -->
+                                <svg viewBox="0 0 800 500" class="library-blueprint" id="library-svg-map">
+                                    <!-- Outer Walls / Floor grid -->
+                                    <rect x="10" y="10" width="780" height="480" rx="15" class="blueprint-border" />
+                                    
+                                    <!-- Main Hallway/Aisle -->
+                                    <line x1="400" y1="10" x2="400" y2="490" class="blueprint-line" stroke-dasharray="10 5" />
+                                    <line x1="10" y1="250" x2="790" y2="250" class="blueprint-line" stroke-dasharray="10 5" />
+
+                                    <!-- Zone A: Phòng đọc Mở (Reading Room) -->
+                                    <g class="map-zone" id="zone-reading" data-zone="reading">
+                                        <rect x="30" y="30" width="340" height="200" rx="10" class="zone-rect" />
+                                        <text x="200" y="120" class="zone-text" text-anchor="middle">A. Phòng Đọc Mở</text>
+                                        <text x="200" y="145" class="zone-text-sub" text-anchor="middle">Sách Đại chúng, Báo, Tạp chí</text>
+                                        <i class="fa-solid fa-couch zone-icon-marker"></i>
+                                    </g>
+
+                                    <!-- Zone B: Khu máy tính Tra cứu (Computer Hub) -->
+                                    <g class="map-zone" id="zone-computer" data-zone="computer">
+                                        <rect x="430" y="30" width="340" height="200" rx="10" class="zone-rect" />
+                                        <text x="600" y="120" class="zone-text" text-anchor="middle">B. Khu Công Nghệ & Tra Cứu</text>
+                                        <text x="600" y="145" class="zone-text-sub" text-anchor="middle">Máy tính, Thư viện số, E-Resource</text>
+                                    </g>
+
+                                    <!-- Zone C: Kho sách Chuyên khảo (Archive) -->
+                                    <g class="map-zone" id="zone-archive" data-zone="archive">
+                                        <rect x="30" y="270" width="340" height="200" rx="10" class="zone-rect" />
+                                        <text x="200" y="360" class="zone-text" text-anchor="middle">C. Kho Sách Chuyên Khảo</text>
+                                        <text x="200" y="385" class="zone-text-sub" text-anchor="middle">Sách chuyên ngành, Nghiên cứu, Từ điển</text>
+                                    </g>
+
+                                    <!-- Zone D: Phòng Tự học & Hội thảo (Self-Study Group Room) -->
+                                    <g class="map-zone" id="zone-study" data-zone="study">
+                                        <rect x="430" y="270" width="340" height="200" rx="10" class="zone-rect" />
+                                        <text x="600" y="360" class="zone-text" text-anchor="middle">D. Phòng Tự Học Nhóm</text>
+                                        <text x="600" y="385" class="zone-text-sub" text-anchor="middle">Phòng thảo luận, Nghiên cứu nhóm</text>
+                                    </g>
+                                    
+                                    <!-- Entrance & Reception -->
+                                    <rect x="360" y="440" width="80" height="40" class="entrance-rect" />
+                                    <text x="400" y="465" class="entrance-text" text-anchor="middle">CỔNG VÀO</text>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Zone Description Details -->
+                        <div class="map-details-card" id="zone-info-panel">
+                            <div class="no-zone-selected" id="no-zone-msg">
+                                <i class="fa-solid fa-hand-pointer fa-4x animate-bounce"></i>
+                                <h4>Nhấp chọn một phân khu trên sơ đồ</h4>
+                                <p>Thông tin chi tiết, quy định của phòng đọc và hướng dẫn định vị sẽ xuất hiện ngay tại đây.</p>
+                            </div>
+
+                            <div class="zone-details-content" id="zone-content-details" style="display: none;">
+                                <div class="zone-header-meta">
+                                    <span class="zone-tag" id="detail-zone-tag">Khu vực A</span>
+                                    <h3 id="detail-zone-title">Phòng Đọc Mở</h3>
+                                </div>
+                                <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=500&q=80" alt="Phòng Đọc" class="zone-image" id="detail-zone-image">
+                                
+                                <div class="zone-body-info">
+                                    <p class="zone-desc" id="detail-zone-desc">Phòng đọc lớn nhất, được thiết kế mở mang phong cách hiện đại với đầy đủ ánh sáng tự nhiên. Thích hợp cho việc đọc sách thư giãn, báo chí.</p>
+                                    
+                                    <div class="zone-meta-list">
+                                        <div class="meta-item">
+                                            <i class="fa-solid fa-users"></i>
+                                            <div>
+                                                <strong>Sức chứa tối đa:</strong>
+                                                <span id="detail-zone-capacity">150 người</span>
+                                            </div>
+                                        </div>
+                                        <div class="meta-item">
+                                            <i class="fa-solid fa-lock"></i>
+                                            <div>
+                                                <strong>Yêu cầu đầu vào:</strong>
+                                                <span id="detail-zone-req">Thẻ độc giả quét ở cổng phòng</span>
+                                            </div>
+                                        </div>
+                                        <div class="meta-item">
+                                            <i class="fa-solid fa-volume-xmark"></i>
+                                            <div>
+                                                <strong>Mức độ tiếng ồn:</strong>
+                                                <span id="detail-zone-noise">Yên tĩnh tuyệt đối (Không nói chuyện)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="zone-quick-action">
+                                        <button class="quick-ask-zone-btn" id="ask-zone-bot-btn"><i class="fa-solid fa-comment-dots"></i> Hỏi LibBot quy định phòng này</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- BOOK DETAILS MODAL -->
+    <div class="modal-overlay" id="book-details-modal" aria-hidden="true" role="dialog">
+        <div class="modal-card">
+            <button class="modal-close-btn" id="modal-close-btn" aria-label="Đóng bảng chi tiết">&times;</button>
+            <div class="modal-body" id="modal-book-content">
+                <!-- Book content loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Javascript -->
+    <script src="app.js"></script>
+</body>
+</html>
