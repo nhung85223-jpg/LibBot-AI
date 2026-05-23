@@ -1002,6 +1002,7 @@ function loadChatHistory() {
     }
 
     async function handleUserSendMessage() {
+        const message = input.value.trim();
         const userText = chatInput.value.trim();
         if (userText === '') return;
 
@@ -1028,47 +1029,37 @@ function loadChatHistory() {
     }
 
     async function generateGeminiResponse(query) {
-        const schoolName = schoolsConfig[currentSchool].fullName;
-        const prompt = `Bạn là LibBot, trợ lý số chuyên nghiệp của ${schoolName}.
-        YÊU CẦU CỐT LÕI:
-        1. Trả lời CHUYÊN NGHIỆP, NGẮN GỌN, đi thẳng vào trọng tâm. Tuyệt đối không dài dòng.
-        2. Vẫn có thể trả lời các kiến thức chuyên môn khác (toán, lập trình, khoa học) với văn phong học thuật, chuẩn mực.
-        3. Sử dụng markdown để format văn bản dễ đọc.
-        Câu hỏi của người dùng: "${query}"`;
 
-        // Thử lần lượt từng API Key, nếu Key nào bị 429 thì chuyển sang Key tiếp theo
-        const shuffledKeys = [...GOOGLE_API_KEYS].sort(() => Math.random() - 0.5);
-
-        for (const key of shuffledKeys) {
-            try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${key}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: prompt }] }]
-                    })
-                });
-
-                const data = await response.json();
-
-                // Nếu bị 429 (hết quota), thử key tiếp theo
-                if (data.error && data.error.code === 429) {
-                    console.warn(`API Key ...${key.slice(-6)} hết quota, thử key khác...`);
-                    continue;
-                }
-
-                if (data.candidates && data.candidates.length > 0) {
-                    return data.candidates[0].content.parts[0].text;
-                }
-            } catch (err) {
-                console.warn(`API Key ...${key.slice(-6)} lỗi mạng, thử key khác...`, err);
-                continue;
-            }
+        try {
+    
+            const response =
+                await fetch(
+                    'http://localhost:3000/api/chat',
+                    {
+                        method: 'POST',
+    
+                        headers: {
+                            'Content-Type':
+                            'application/json'
+                        },
+    
+                        body: JSON.stringify({
+                            message: query
+                        })
+                    }
+                );
+    
+            const data =
+                await response.json();
+                console.log(data);
+            return data.reply;
+    
+        } catch(error) {
+    
+            console.error(error);
+    
+            return 'Không thể kết nối AI server.';
         }
-
-        // Tất cả Key đều thất bại → Fallback về bộ não NLP ngoại tuyến
-        console.warn('Tất cả API Key đều hết quota. Chuyển sang chế độ NLP ngoại tuyến.');
-        return generateNlpResponse(query);
     }
 
     function appendMessage(
@@ -1291,7 +1282,7 @@ function loadChatHistory() {
         resultsCount.textContent = `Đang tìm kiếm (Trang ${page})...`;
 
         try {
-            const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(keyword)}&startIndex=${startIndex}&maxResults=12&key=${getRandomApiKey()}`);
+            const response = await fetch(url);
             const data = await response.json();
             
             if (data.items && data.items.length > 0) {
