@@ -1034,7 +1034,7 @@ function loadChatHistory() {
     
             const response =
                 await fetch(
-                    'http://localhost:3000/api/chat',
+                    'https://libbot-ai.onrender.com/api/chat',
                     {
                         method: 'POST',
     
