@@ -746,6 +746,7 @@ function loadChatHistory() {
     const allTabs =
 document.querySelectorAll('.tab-panel');
 
+if (schoolSelect) {
 schoolSelect.addEventListener('change', function () {
 
     const authorPage =
@@ -781,6 +782,7 @@ schoolSelect.addEventListener('change', function () {
         sendBotGreeting(currentSchool);
     }
 });
+}
     function updateSchoolUI(schoolKey) {
         const config = schoolsConfig[schoolKey];
         if (!config) return;
@@ -1863,36 +1865,5 @@ window.showDepartment = function(dept) {
     }
 };
     init();
-
-});
-/* =========================
-   PAGE SWITCH
-========================= */
-
-const schoolSelect =
-    document.getElementById('page-selector');
-
-const contentViewport =
-document.querySelector(".content-viewport");
-
-const authorPage =
-document.getElementById("author-page");
-
-pageSelector.addEventListener("change", function(){
-
-    if(this.value === "author"){
-
-        contentViewport.style.display = "none";
-
-        authorPage.style.display = "block";
-
-    }
-
-    else{
-
-        contentViewport.style.display = "block";
-
-        authorPage.style.display = "none";
-    }
 
 });
