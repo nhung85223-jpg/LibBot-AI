@@ -6,9 +6,10 @@
     
     // Mảng chứa các API Key để luân phiên sử dụng (Tránh lỗi 429 Quota Exceeded)
     const GOOGLE_API_KEYS = [
-        'AIzaSyCO-k1nf0vEPuHPmOqE11nd2sXjDQqw4nE',
-        'AIzaSyDr0ZHfzPvnH55JRAge_g0LN0Ec5Qlv7nk',
-        'AIzaSyAcW6QnLpEJNxZYHD9BIjL5pv5Oeyg3-LU'
+        'AIzaSyAwTAXiKvbZ4QtCEgSXkOFK13X50DWCyzA',
+        'AIzaSyDIPqeTgrHIGouxWMfLJ0gtjA6W5UNoets',
+        'AIzaSyDKpxb-NdJspRzFOMrpqC4sKzHKTOV9NHw',
+        'AIzaSyCnsNtllzPkDZWpq8QOrzBIV1xKCVFL8u0'
     ];
 
     function getRandomApiKey() {
