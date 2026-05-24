@@ -560,7 +560,7 @@ Thông tin chính:
     
     // Theme & School selectors
     const themeToggleBtn = document.getElementById('theme-toggle-btn');
-    const schoolSelect = document.getElementById('school-select');
+    const schoolSelect = document.getElementById('page-selector');
     
     // Quick widgets info
     const statBooks = document.getElementById('stat-books');
@@ -743,14 +743,38 @@ function loadChatHistory() {
     });
 
     // Cập nhật giao diện khi đổi trường học
-    schoolSelect.addEventListener('change', (e) => {
-        const schoolValue = e.target.value;
-        currentSchool = schoolValue;
-        updateSchoolUI(schoolValue);
-        
-        // Kích hoạt LibBot gửi tin chào hỏi thương hiệu trường mới
-        sendBotGreeting(schoolValue);
-    });
+    const allTabs =
+document.querySelectorAll('.tab-panel');
+
+schoolSelect.addEventListener('change', function () {
+
+    if (this.value === 'author') {
+
+        allTabs.forEach(tab => {
+            tab.style.display = 'none';
+        });
+
+        document.getElementById('author-page')
+            .style.display = 'block';
+    }
+
+    else {
+
+        allTabs.forEach(tab => {
+            tab.style.display = '';
+        });
+
+        document.getElementById('author-page')
+            .style.display = 'none';
+
+        currentSchool = this.value;
+
+        updateSchoolUI(currentSchool);
+
+        // Gửi lời chào lại cho chatbot
+        sendBotGreeting(currentSchool);
+    }
+});
 
     function updateSchoolUI(schoolKey) {
         const config = schoolsConfig[schoolKey];
