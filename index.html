@@ -27,7 +27,7 @@
         <aside class="sidebar">
             <div class="brand">
                 <div class="brand-logo">
-                    <i class="fa-solid fa-graduation-cap"></i>
+                    <img src="images/logo.png" alt="LibBot Logo">
                 </div>
                 <div class="brand-info">
                     <h2>LibBot</h2>
@@ -38,26 +38,26 @@
             <nav class="nav-menu">
                 <a href="#" class="nav-item active" data-tab="chat-tab" id="nav-chat">
                     <i class="fa-solid fa-comments"></i>
-                    <span>Trợ lý Ảo AI</span>
+                    <span>Trợ lý ảo AI</span>
                 </a>
                 <a href="#" class="nav-item" data-tab="search-tab" id="nav-search">
                     <i class="fa-solid fa-book-open"></i>
-                    <span>Tra cứu Tài liệu</span>
+                    <span>Tra cứu tài liệu</span>
                 </a>
                 <a href="#" class="nav-item" data-tab="services-tab" id="nav-services">
                     <i class="fa-solid fa-id-card"></i>
-                    <span>Dịch vụ Thẻ & Quy định</span>
+                    <span>Dịch vụ thẻ & Quy định</span>
                 </a>
                 <a href="#" class="nav-item" data-tab="map-tab" id="nav-map">
                     <i class="fa-solid fa-map-location-dot"></i>
-                    <span>Sơ đồ Thư viện</span>
+                    <span>Các phòng ban</span>
                 </a>
             </nav>
 
             <div class="sidebar-footer">
                 <div class="connection-status">
                     <span class="status-dot online"></span>
-                    <span class="status-text" id="api-status">API TVQG Online</span>
+                    <span class="status-text" id="api-status">TVQG Online</span>
                 </div>
                 <p>&copy; 2026 LibBot System v1.5</p>
             </div>
@@ -128,7 +128,7 @@
                                     <span class="pulse-ring"></span>
                                 </div>
                                 <div class="chatbot-title">
-                                    <h3>LibBot (AI Assistant)</h3>
+                                    <h3>LibBot (AI LNV)</h3>
                                     <p id="bot-status-text">Đang trực tuyến • Sẵn sàng hỗ trợ bạn</p>
                                 </div>
                             </div>
@@ -449,106 +449,273 @@
                     <div class="map-wrapper">
                         <!-- Left Panel: Responsive Interactive SVG Map -->
                         <div class="map-view-card">
-                            <h3><i class="fa-solid fa-compass"></i> Sơ đồ tương tác Phân khu Thư viện</h3>
-                            <p>Nhấp vào các phân khu trên sơ đồ để xem thông tin chi tiết, chỉ dẫn và danh mục tài liệu đặc thù.</p>
+                            <h3><i class="fa-solid fa-compass"></i> Các phòng ban</h3>
+                            <p>Nhấp vào từng phòng ban để xem thông tin chi tiết về chức năng, nhiệm vụ và dịch vụ hỗ trợ.</p>
                             
-                            <div class="interactive-map-container">
-                                <!-- Modern Interactive SVG Blueprint -->
-                                <svg viewBox="0 0 800 500" class="library-blueprint" id="library-svg-map">
-                                    <!-- Outer Walls / Floor grid -->
-                                    <rect x="10" y="10" width="780" height="480" rx="15" class="blueprint-border" />
-                                    
-                                    <!-- Main Hallway/Aisle -->
-                                    <line x1="400" y1="10" x2="400" y2="490" class="blueprint-line" stroke-dasharray="10 5" />
-                                    <line x1="10" y1="250" x2="790" y2="250" class="blueprint-line" stroke-dasharray="10 5" />
+                            <div class="departments-grid">
 
-                                    <!-- Zone A: Phòng đọc Mở (Reading Room) -->
-                                    <g class="map-zone" id="zone-reading" data-zone="reading">
-                                        <rect x="30" y="30" width="340" height="200" rx="10" class="zone-rect" />
-                                        <text x="200" y="120" class="zone-text" text-anchor="middle">A. Phòng Đọc Mở</text>
-                                        <text x="200" y="145" class="zone-text-sub" text-anchor="middle">Sách Đại chúng, Báo, Tạp chí</text>
-                                        <i class="fa-solid fa-couch zone-icon-marker"></i>
-                                    </g>
-
-                                    <!-- Zone B: Khu máy tính Tra cứu (Computer Hub) -->
-                                    <g class="map-zone" id="zone-computer" data-zone="computer">
-                                        <rect x="430" y="30" width="340" height="200" rx="10" class="zone-rect" />
-                                        <text x="600" y="120" class="zone-text" text-anchor="middle">B. Khu Công Nghệ & Tra Cứu</text>
-                                        <text x="600" y="145" class="zone-text-sub" text-anchor="middle">Máy tính, Thư viện số, E-Resource</text>
-                                    </g>
-
-                                    <!-- Zone C: Kho sách Chuyên khảo (Archive) -->
-                                    <g class="map-zone" id="zone-archive" data-zone="archive">
-                                        <rect x="30" y="270" width="340" height="200" rx="10" class="zone-rect" />
-                                        <text x="200" y="360" class="zone-text" text-anchor="middle">C. Kho Sách Chuyên Khảo</text>
-                                        <text x="200" y="385" class="zone-text-sub" text-anchor="middle">Sách chuyên ngành, Nghiên cứu, Từ điển</text>
-                                    </g>
-
-                                    <!-- Zone D: Phòng Tự học & Hội thảo (Self-Study Group Room) -->
-                                    <g class="map-zone" id="zone-study" data-zone="study">
-                                        <rect x="430" y="270" width="340" height="200" rx="10" class="zone-rect" />
-                                        <text x="600" y="360" class="zone-text" text-anchor="middle">D. Phòng Tự Học Nhóm</text>
-                                        <text x="600" y="385" class="zone-text-sub" text-anchor="middle">Phòng thảo luận, Nghiên cứu nhóm</text>
-                                    </g>
-                                    
-                                    <!-- Entrance & Reception -->
-                                    <rect x="360" y="440" width="80" height="40" class="entrance-rect" />
-                                    <text x="400" y="465" class="entrance-text" text-anchor="middle">CỔNG VÀO</text>
-                                </svg>
+                                <!-- PHÒNG 1 -->
+                                <div class="department-card"
+                                onclick="showDepartment('hanhchinh')">
+                                    <div>
+                                        <div class="department-icon">
+                                            <i class="fa-solid fa-building"></i>
+                                        </div>
+                            
+                                        <h3 class="department-title">
+                                            Phòng Hành chính,tổng hợp
+                                        </h3>
+                            
+                                        <p class="department-desc">
+                                            Tham mưu, tổng hợp, quản lý hành chính,
+                                            tổ chức và nhân sự.
+                                        </p>
+                                    </div>
+                            
+                                    <a class="department-btn"
+                                       onclick="showDepartment('hanhchinh')">
+                            
+                                        Xem chi tiết →
+                                    </a>
+                                </div>
+                            
+                                <!-- PHÒNG 2 -->
+                                <div class="department-card"
+                                onclick="showDepartment('luuchieu')">
+                                    <div>
+                                        <div class="department-icon">
+                                            <i class="fa-solid fa-box-archive"></i>
+                                        </div>
+                            
+                                        <h3 class="department-title">
+                                            Phòng Lưu chiểu,bổ sung
+                                        </h3>
+                            
+                                        <p class="department-desc">
+                                            Thực hiện lưu chiểu,
+                                            bổ sung tài liệu trong và ngoài nước.
+                                        </p>
+                                    </div>
+                            
+                                    <a class="department-btn"
+                                       onclick="showDepartment('luuchieu')">
+                            
+                                        Xem chi tiết →
+                                    </a>
+                                </div>
+                            
+                                <!-- PHÒNG 3 -->
+                                <div class="department-card"
+                                onclick="showDepartment('bienmuc')">
+                            
+                                    <div>
+                                        <div class="department-icon">
+                                            <i class="fa-solid fa-book"></i>
+                                        </div>
+                            
+                                        <h3 class="department-title">
+                                            Phòng Phân loại, biên mục
+                                        </h3>
+                            
+                                        <p class="department-desc">
+                                            Phân loại, biên mục,
+                                            xây dựng và quản lý dữ liệu thư mục.
+                                        </p>
+                                    </div>
+                            
+                                    <a class="department-btn"
+                                       onclick="showDepartment('bienmuc')">
+                            
+                                        Xem chi tiết →
+                                    </a>
+                                </div>
+                            
+                                <!-- PHÒNG 4 -->
+                                <div class="department-card"
+                                onclick="showDepartment('baoquan')">
+                            
+                                    <div>
+                                        <div class="department-icon">
+                                            <i class="fa-solid fa-box"></i>
+                                        </div>
+                            
+                                        <h3 class="department-title">
+                                            Phòng Bảo quản tài liệu
+                                        </h3>
+                            
+                                        <p class="department-desc">
+                                            Bảo quản, phục chế và bảo vệ
+                                            tài liệu, hiện vật.
+                                        </p>
+                                    </div>
+                            
+                                    <a class="department-btn"
+                                       onclick="showDepartment('baoquan')">
+                            
+                                        Xem chi tiết →
+                                    </a>
+                                </div>
+                            
+                                <!-- PHÒNG 5 -->
+                                <div class="department-card"
+                                onclick="showDepartment('phongdoc')">
+                            
+                                    <div>
+                                        <div class="department-icon">
+                                            <i class="fa-solid fa-book-open"></i>
+                                        </div>
+                            
+                                        <h3 class="department-title">
+                                            Phòng Đọc
+                                        </h3>
+                            
+                                        <p class="department-desc">
+                                            Tổ chức phục vụ bạn đọc tại chỗ,
+                                            hỗ trợ tra cứu và sử dụng tài liệu.
+                                        </p>
+                                    </div>
+                            
+                                    <a class="department-btn"
+                                       onclick="showDepartment('phongdoc')">
+                            
+                                        Xem chi tiết →
+                                    </a>
+                                </div>
+                            
+                                <!-- PHÒNG 6 -->
+                                <div class="department-card"
+                                onclick="showDepartment('tulieu')">
+                            
+                                    <div>
+                                        <div class="department-icon">
+                                            <i class="fa-solid fa-circle-info"></i>
+                                        </div>
+                            
+                                        <h3 class="department-title">
+                                            Phòng Thông tin tư liệu
+                                        </h3>
+                            
+                                        <p class="department-desc">
+                                            Cung cấp thông tin, tư liệu,
+                                            hỗ trợ tra cứu và giới thiệu tài liệu.
+                                        </p>
+                                    </div>
+                            
+                                    <a class="department-btn"
+                                       onclick="showDepartment('tulieu')">
+                            
+                                        Xem chi tiết →
+                                    </a>
+                                </div>
+                            
+                                <!-- PHÒNG 7 -->
+                                <div class="department-card"
+                                onclick="showDepartment('tinhoc')">
+                            
+                                    <div>
+                                        <div class="department-icon">
+                                            <i class="fa-solid fa-desktop"></i>
+                                        </div>
+                            
+                                        <h3 class="department-title">
+                                            Phòng Tin học
+                                        </h3>
+                            
+                                        <p class="department-desc">
+                                            Quản trị hệ thống công nghệ thông tin,
+                                            phát triển ứng dụng và hạ tầng số.
+                                        </p>
+                                    </div>
+                            
+                                    <a class="department-btn"
+                                       onclick="showDepartment('tinhoc')">
+                            
+                                        Xem chi tiết →
+                                    </a>
+                                </div>
+                            
+                                <!-- PHÒNG 8 -->
+                                <div class="department-card"
+                                onclick="showDepartment('nghiencuu')">
+                            
+                                    <div>
+                                        <div class="department-icon">
+                                            <i class="fa-solid fa-graduation-cap"></i>
+                                        </div>
+                            
+                                        <h3 class="department-title">
+                                            Phòng Nghiên cứu khoa học
+                                            và hướng dẫn nghiệp vụ
+                                        </h3>
+                            
+                                        <p class="department-desc">
+                                            Nghiên cứu khoa học,
+                                            hướng dẫn nghiệp vụ và hợp tác chuyên môn.
+                                        </p>
+                                    </div>
+                            
+                                    <a class="department-btn"
+                                       onclick="showDepartment('nghiencuu')">
+                            
+                                        Xem chi tiết →
+                                    </a>
+                                </div>
+                            
                             </div>
-                        </div>
+                            </div>
 
                         <!-- Right Panel: Zone Description Details -->
-                        <div class="map-details-card" id="zone-info-panel">
+                        <div class="department-detail-card" id="zone-info-panel">
                             <div class="no-zone-selected" id="no-zone-msg">
-                                <i class="fa-solid fa-hand-pointer fa-4x animate-bounce"></i>
-                                <h4>Nhấp chọn một phân khu trên sơ đồ</h4>
-                                <p>Thông tin chi tiết, quy định của phòng đọc và hướng dẫn định vị sẽ xuất hiện ngay tại đây.</p>
+                                <i class="fas fa-hand-pointer"></i>
+                                <h3>Nhấp chọn một phòng ban</h3>
+                                <p>
+                                    Thông tin chi tiết của phòng ban sẽ hiển thị tại đây.
+                                </p>
                             </div>
 
-                            <div class="zone-details-content" id="zone-content-details" style="display: none;">
-                                <div class="zone-header-meta">
-                                    <span class="zone-tag" id="detail-zone-tag">Khu vực A</span>
-                                    <h3 id="detail-zone-title">Phòng Đọc Mở</h3>
-                                </div>
-                                <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=500&q=80" alt="Phòng Đọc" class="zone-image" id="detail-zone-image">
-                                
-                                <div class="zone-body-info">
-                                    <p class="zone-desc" id="detail-zone-desc">Phòng đọc lớn nhất, được thiết kế mở mang phong cách hiện đại với đầy đủ ánh sáng tự nhiên. Thích hợp cho việc đọc sách thư giãn, báo chí.</p>
-                                    
-                                    <div class="zone-meta-list">
-                                        <div class="meta-item">
-                                            <i class="fa-solid fa-users"></i>
-                                            <div>
-                                                <strong>Sức chứa tối đa:</strong>
-                                                <span id="detail-zone-capacity">150 người</span>
-                                            </div>
-                                        </div>
-                                        <div class="meta-item">
-                                            <i class="fa-solid fa-lock"></i>
-                                            <div>
-                                                <strong>Yêu cầu đầu vào:</strong>
-                                                <span id="detail-zone-req">Thẻ độc giả quét ở cổng phòng</span>
-                                            </div>
-                                        </div>
-                                        <div class="meta-item">
-                                            <i class="fa-solid fa-volume-xmark"></i>
-                                            <div>
-                                                <strong>Mức độ tiếng ồn:</strong>
-                                                <span id="detail-zone-noise">Yên tĩnh tuyệt đối (Không nói chuyện)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="zone-quick-action">
-                                        <button class="quick-ask-zone-btn" id="ask-zone-bot-btn"><i class="fa-solid fa-comment-dots"></i> Hỏi LibBot quy định phòng này</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
+                            <!-- CHI TIẾT -->
+                            <div class="zone-details-content"
+                            id="zone-content-details"
+                            style="display:none;">
+                       
+                           <span class="zone-badge"
+                                 id="detail-zone-tag">
+                               PHÒNG BAN
+                           </span>
+                       
+                           <h2 id="detail-zone-title"></h2>
+                       
+                           <img id="detail-zone-image"
+                                src=""
+                                alt="">
+                       
+                           <p id="detail-zone-desc"></p>
+                       
+                           <div class="zone-meta">
+                       
+                               <p>
+                                   <strong>Sức chứa:</strong>
+                                   <span id="detail-zone-capacity"></span>
+                               </p>
+                       
+                               <p>
+                                   <strong>Yêu cầu:</strong>
+                                   <span id="detail-zone-req"></span>
+                               </p>
+                       
+                               <p>
+                                   <strong>Mức độ tiếng ồn:</strong>
+                                   <span id="detail-zone-noise"></span>
+                               </p>
+                       
+                           </div>
+                       
+                       </div>        
+                </div>
+            </div>
+        </section>
+        
             </div>
         </main>
     </div>
@@ -567,3 +734,4 @@
     <script src="app.js"></script>
 </body>
 </html>
+

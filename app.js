@@ -2,7 +2,7 @@
    LibBot JavaScript Core Logic - Cực kỳ Thông minh & Tương tác cao
    ========================================================================== */
 
-document.addEventListener('DOMContentLoaded', () => {
+   document.addEventListener('DOMContentLoaded', () => {
     
     // Mảng chứa các API Key để luân phiên sử dụng (Tránh lỗi 429 Quota Exceeded)
     const GOOGLE_API_KEYS = [
@@ -605,7 +605,6 @@ Thông tin chính:
     const downloadCardBtn = document.getElementById('download-card-btn');
 
     // SVG Map components
-    const mapZones = document.querySelectorAll('.map-zone');
     const zoneInfoPanel = document.getElementById('zone-info-panel');
     const noZoneMsg = document.getElementById('no-zone-msg');
     const zoneContentDetails = document.getElementById('zone-content-details');
@@ -1592,91 +1591,248 @@ function loadChatHistory() {
     });
 
 
-    // ==========================================================================
-    // 11. INTERACTIVE SVG MAP EVENTS (Sơ đồ phân khu tương tác)
-    // ==========================================================================
+// ==========================================================================
+// PHÒNG BAN - XEM CHI TIẾT
+// ==========================================================================
 
-    const mapZonesData = {
-        reading: {
-            title: 'Phòng Đọc Mở (Khu A)',
-            tag: 'Phân khu A',
-            image: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=500&q=80',
-            desc: 'Không gian phòng đọc mở được thiết kế cực kỳ hiện đại với nguồn ánh sáng tự nhiên ngập tràn. Thích hợp cho độc giả đọc sách thư giãn, nghiên cứu các tài liệu báo chí, tạp chí định kỳ và các tác phẩm văn học nghệ thuật đại chúng.',
-            capacity: '150 chỗ ngồi thoải mái',
-            requirement: 'Quét thẻ E-Card tự động ở cửa phòng đọc',
-            noise: 'Yên lặng tương đối (Có thể trao đổi rất khẽ)'
-        },
-        computer: {
-            title: 'Khu Công Nghệ & Tra Cứu (Khu B)',
-            tag: 'Phân khu B',
-            image: 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=500&q=80',
-            desc: 'Khu vực công nghệ số được trang bị hệ thống 50 máy tính cấu hình cao kết nối Internet tốc độ cao, cho phép tra cứu toàn diện kho dữ liệu số của Thư viện Quốc gia. Có cổng tai nghe học thuật, máy in và máy quét scan tài liệu miễn phí.',
-            capacity: '50 máy trạm làm việc song song',
-            requirement: 'Đăng ký phiên máy qua cổng LibBot hoặc thẻ độc giả',
-            noise: 'Yên lặng (Đeo tai nghe khi nghe âm thanh)'
-        },
-        archive: {
-            title: 'Kho Sách Chuyên Khảo & Nghiên Cứu (Khu C)',
-            tag: 'Phân khu C',
-            image: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=500&q=80',
-            desc: 'Khu vực lưu trữ các bản sách cổ quý hiếm, từ điển đa ngôn ngữ, giáo trình đại học nâng cao và báo cáo nghiên cứu học thuật của quốc gia. Các tài liệu tại đây được bảo tồn nghiêm ngặt và hạn chế mang ra ngoài.',
-            capacity: '60 người nghiên cứu chuyên sâu',
-            requirement: 'Chỉ chấp nhận thẻ độc giả Nghiên cứu đặc quyền',
-            noise: 'Yên lặng tuyệt đối (Không tiếng ồn)'
-        },
-        study: {
-            title: 'Phòng Tự Học & Thảo Luận Nhóm (Khu D)',
-            tag: 'Phân khu D',
-            image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=500&q=80',
-            desc: 'Hệ thống 8 phòng họp kính cách âm hiện đại có trang bị màn hình chiếu tương tác và bảng viết thông minh. Thích hợp cho các buổi học nhóm thảo luận dự án nghiên cứu khoa học, thuyết trình thử nghiệm và làm việc nhóm sáng tạo.',
-            capacity: 'Từ 6 - 15 người / phòng họp kính',
-            requirement: 'Đặt phòng trước 24 giờ trên biểu mẫu E-Service trực tuyến',
-            noise: 'Trao đổi thảo luận tự do trong không gian cách âm'
-        }
-    };
+window.showDepartment = function(dept) {
 
-    mapZones.forEach(zone => {
-        zone.addEventListener('click', () => {
-            // Bỏ active cũ
-            mapZones.forEach(z => z.classList.remove('active'));
-            
-            // Active vùng hiện tại
-            zone.classList.add('active');
+    noZoneMsg.style.display = 'none';
 
-            const zoneKey = zone.getAttribute('data-zone');
-            const data = mapZonesData[zoneKey];
-            if (data) {
-                // Ẩn tin nhắn chỉ dẫn ban đầu
-                noZoneMsg.style.display = 'none';
-
-                // Nạp dữ liệu vào bảng thông tin bên phải bản đồ
-                detailZoneTag.textContent = data.tag;
-                detailZoneTitle.textContent = data.title;
-                detailZoneImage.src = data.image;
-                detailZoneDesc.textContent = data.desc;
-                detailZoneCapacity.textContent = data.capacity;
-                detailZoneReq.textContent = data.requirement;
-                detailZoneNoise.textContent = data.noise;
-
-                // Hiện nội dung
-                zoneContentDetails.style.display = 'flex';
-            }
-        });
-    });
-
-    // Nút "Hỏi ChatBot quy định phòng này" kích hoạt Chatbot giải đáp tự động
-    askZoneBotBtn.addEventListener('click', () => {
-        const currentZoneTitle = detailZoneTitle.textContent;
-        document.getElementById('nav-chat').click();
-        
-        chatInput.value = `Quy định phòng ${currentZoneTitle} như thế nào?`;
-        handleUserSendMessage();
-    });
+    zoneContentDetails.style.display = 'block';
 
 
-    // ==========================================================================
-    // 12. RUN INITIALIZATION
-    // ==========================================================================
+    // =========================
+    // PHÒNG HÀNH CHÍNH
+    // =========================
+
+    if (dept === 'hanhchinh') {
+
+        detailZoneTag.innerText =
+            'PHÒNG BAN';
+
+        detailZoneTitle.innerText =
+            'Phòng Hành chính, tổng hợp';
+
+        detailZoneImage.src =
+            'images/hcth.jpg';
+
+        detailZoneDesc.innerText =
+            'Tham mưu, tổng hợp, quản lý hành chính, tổ chức và nhân sự.';
+
+        detailZoneCapacity.innerText =
+            '15 cán bộ';
+
+        detailZoneReq.innerText =
+            'Làm việc hành chính';
+
+        detailZoneNoise.innerText =
+            'Yên tĩnh';
+    }
+
+
+    // =========================
+    // PHÒNG LƯU CHIỂU
+    // =========================
+
+    else if (dept === 'luuchieu') {
+
+        detailZoneTag.innerText =
+            'PHÒNG BAN';
+
+        detailZoneTitle.innerText =
+            'Phòng Lưu chiểu, bổ sung';
+
+        detailZoneImage.src =
+            'images/lcbs.jpg';
+
+        detailZoneDesc.innerText =
+            'Thu thập, bảo tồn và phát triển vốn tài liệu của dân tộc bằng việc theo dõi, đôn đốc các nhà xuất bản, cơ quan xuất bản, cơ quan thông tấn báo chí, Vụ sau Đại học… nộp đầy đủ các xuất bản phẩm, luận án tiến sĩ của người Việt Nam bảo vệ trong nước và nước ngoài, của người nước ngoài bảo vệ tại Việt Nam trên phạm vi cả nước.';
+
+        detailZoneCapacity.innerText =
+            '20 cán bộ';
+
+        detailZoneReq.innerText =
+            'Nghiệp vụ thư viện';
+
+        detailZoneNoise.innerText =
+            'Yên tĩnh';
+    }
+
+
+    // =========================
+    // PHÒNG BIÊN MỤC
+    // =========================
+
+    else if (dept === 'bienmuc') {
+
+        detailZoneTag.innerText =
+            'PHÒNG BAN';
+
+        detailZoneTitle.innerText =
+            'Phòng Phân loại, biên mục';
+
+        detailZoneImage.src =
+            'images/plbm.jpg';
+
+        detailZoneDesc.innerText =
+            'Biên mục xử lý kỹ thuật các xuất bản phẩm và luận án tiến sĩ nhập vào Thư viện Quốc gia Việt Nam. Phối hợp với các phòng chức năng trong thư viện xây dựng cơ sở dữ liệu nhằm giúp bạn đọc tra cứu tìm tài liệu, phục vụ nghiên cứu và học tập. Xây dựng Bộ qui tắc xử lý tài liệu theo chuẩn quốc tế trên phạm vi toàn ngành thư viện Việt Nam.';
+
+        detailZoneCapacity.innerText =
+            '18 cán bộ';
+
+        detailZoneReq.innerText =
+            'Nghiệp vụ thư viện';
+
+        detailZoneNoise.innerText =
+            'Yên tĩnh';
+    }
+
+
+    // =========================
+    // PHÒNG BẢO QUẢN
+    // =========================
+
+    else if (dept === 'baoquan') {
+
+        detailZoneTag.innerText =
+            'PHÒNG BAN';
+
+        detailZoneTitle.innerText =
+            'Phòng Bảo quản tài liệu';
+
+        detailZoneImage.src =
+            'images/bqtl.jpg';
+
+        detailZoneDesc.innerText =
+            'Tổ chức, quản lý hệ thống Tổng kho của Thư viện Quốc gia Việt Nam. Bảo quản, phục chế, chuyển dạng tài liệu và đáp ứng nhu cầu của độc giả sử dụng vốn tài liệu của Thư viện.';
+
+        detailZoneCapacity.innerText =
+            '12 cán bộ';
+
+        detailZoneReq.innerText =
+            'Khu vực chuyên môn';
+
+        detailZoneNoise.innerText =
+            'Yên tĩnh';
+    }
+
+
+    // =========================
+    // PHÒNG ĐỌC
+    // =========================
+
+    else if (dept === 'phongdoc') {
+
+        detailZoneTag.innerText =
+            'PHÒNG BAN';
+
+        detailZoneTitle.innerText =
+            'Phòng Đọc';
+
+        detailZoneImage.src =
+            'images/d.jpg';
+
+        detailZoneDesc.innerText =
+            'Tổ chức sử dụng và quản lý vốn tài liệu của Thư viện theo chức năng, nhiệm vụ của TVQG.';
+
+        detailZoneCapacity.innerText =
+            '200 chỗ ngồi';
+
+        detailZoneReq.innerText =
+            'Có thẻ thư viện';
+
+        detailZoneNoise.innerText =
+            'Giữ trật tự';
+    }
+
+
+    // =========================
+    // PHÒNG TƯ LIỆU
+    // =========================
+
+    else if (dept === 'tulieu') {
+
+        detailZoneTag.innerText =
+            'PHÒNG BAN';
+
+        detailZoneTitle.innerText =
+            'Phòng Thông tin tư liệu';
+
+        detailZoneImage.src =
+            'images/tttl.jpg';
+
+        detailZoneDesc.innerText =
+            'Tổ chức, hướng dẫn bạn đọc tra cứu thông tin, trả lời các yêu cầu tin cho mọi đối tượng độc giả thư viện, từng bước hoàn thiện bộ máy tra cứu thông tin tư liệu của Thư viện Quốc gia Việt Nam.';
+
+        detailZoneCapacity.innerText =
+            '10 cán bộ';
+
+        detailZoneReq.innerText =
+            'Tra cứu tài liệu';
+
+        detailZoneNoise.innerText =
+            'Yên tĩnh';
+    }
+
+
+    // =========================
+    // PHÒNG TIN HỌC
+    // =========================
+
+    else if (dept === 'tinhoc') {
+
+        detailZoneTag.innerText =
+            'PHÒNG BAN';
+
+        detailZoneTitle.innerText =
+            'Phòng Tin học';
+
+        detailZoneImage.src =
+            'images/th.jpg';
+
+        detailZoneDesc.innerText =
+            'Tổ chức, quản lý hệ thống và các dịch vụ thông tin của Thư viện Quốc gia Việt Nam.';
+
+        detailZoneCapacity.innerText =
+            '25 máy tính';
+
+        detailZoneReq.innerText =
+            'Khu công nghệ';
+
+        detailZoneNoise.innerText =
+            'Mức trung bình';
+    }
+
+
+    // =========================
+    // PHÒNG NGHIÊN CỨU
+    // =========================
+
+    else if (dept === 'nghiencuu') {
+
+        detailZoneTag.innerText =
+            'PHÒNG BAN';
+
+        detailZoneTitle.innerText =
+            'Phòng Nghiên cứu khoa học và hướng dẫn nghiệp vụ';
+
+        detailZoneImage.src =
+            'images/nckh.jpg';
+
+        detailZoneDesc.innerText =
+            'Tổ chức, thực hiện các hoạt động nghiên cứu khoa học của đơn vị. Hướng dẫn nghiệp vụ thư viện cho mạng lưới thư viện cả nước theo chức năng, nhiệm vụ của TVQG';
+
+        detailZoneCapacity.innerText =
+            '30 nhà nghiên cứu';
+
+        detailZoneReq.innerText =
+            'Độc giả nghiên cứu';
+
+        detailZoneNoise.innerText =
+            'Yên tĩnh tuyệt đối';
+    }
+};
     init();
 
 });

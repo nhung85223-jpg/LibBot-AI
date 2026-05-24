@@ -24,7 +24,7 @@
     --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     
-    --sidebar-width: 280px;
+    --sidebar-width: 240px;
     --header-height: 80px;
 }
 
@@ -90,13 +90,25 @@ body.light-theme {
 
 body {
     font-family: var(--font-body);
-    background-color: var(--bg-app);
+
+    background:
+        linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.72)),
+        url('./images/bg.jpg');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
     color: var(--text-primary);
     min-height: 100vh;
     overflow-x: hidden;
     display: flex;
     justify-content: center;
-    transition: background-color var(--transition-normal), color var(--transition-normal);
+
+    transition:
+        background-color var(--transition-normal),
+        color var(--transition-normal);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -249,8 +261,8 @@ body.light-theme .bubble {
 }
 
 .brand-logo {
-    width: 44px;
-    height: 44px;
+    width: 100px;
+    height: 100px;
     background: var(--gradient-primary);
     border-radius: 12px;
     display: flex;
@@ -260,7 +272,15 @@ body.light-theme .bubble {
     font-size: 20px;
     box-shadow: var(--shadow-glow);
 }
-
+.brand {
+    gap: 20px;
+}
+.brand-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+}
 .brand-info h2 {
     font-size: 22px;
     font-weight: 700;
@@ -555,7 +575,9 @@ body.light-theme .icon-moon { display: none; }
     backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
     border: var(--glass-border);
-    box-shadow: var(--glass-shadow);
+    box-shadow: var(--glass-shadow),
+                0 0 40px rgba(99,102,241,0.15),
+                0 0 80px rgba(139,92,246,0.08);
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -947,12 +969,14 @@ body.light-theme .suggestions-container {
     justify-content: center;
     font-size: 16px;
     box-shadow: var(--shadow-glow);
-    transition: all var(--transition-fast);
+    transition: all 0.3s ease;
 }
 
 .send-message-btn:hover {
-    transform: scale(1.05) rotate(-10deg);
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+    transform: scale(1.08) rotate(-8deg);
+    box-shadow:
+        0 0 20px rgba(99,102,241,0.5),
+        0 0 40px rgba(139,92,246,0.3);
 }
 
 /* Chat Sidebar (Information Cards) */
@@ -2112,7 +2136,74 @@ body.light-theme .blueprint-line {
     background: var(--gradient-primary);
     color: #fff;
 }
+/* =========================
+   PHÒNG BAN GRID
+========================= */
 
+.departments-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+    margin-top:20px;
+}
+
+.department-card{
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:20px;
+    padding:25px 20px;
+    transition:0.3s;
+    backdrop-filter:blur(10px);
+}
+
+.department-card:hover{
+    transform:translateY(-5px);
+    border-color:#6c63ff;
+    box-shadow:0 0 20px rgba(108,99,255,0.3);
+}
+
+.department-icon{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background:rgba(108,99,255,0.15);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:18px;
+    font-size:30px;
+    color:#8b7cff;
+}
+
+.department-card h3{
+    font-size:28px;
+    font-weight:700;
+    margin-bottom:12px;
+    color:#fff;
+}
+
+.department-card p{
+    font-size:15px;
+    line-height:1.7;
+    color:rgba(255,255,255,0.7);
+    min-height:90px;
+}
+
+.department-btn{
+    margin-top:18px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    color:#8b7cff;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.department-btn:hover{
+    color:#fff;
+    transform:translateX(5px);
+}
 
 /* ==========================================================================
    MODAL DIALOG: BOOK DETAILS
@@ -2352,4 +2443,73 @@ body.light-theme .blueprint-line {
     .modal-book-cover {
         margin: 0 auto;
     }
+}
+@media (max-width: 768px) {
+    body {
+        background-position: center center;
+        background-size: cover;
+    }
+}
+.chat-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            120deg,
+            transparent,
+            rgba(255,255,255,0.03),
+            transparent
+        );
+
+    pointer-events: none;
+}
+.department-detail-card{
+    background:rgba(20,20,35,0.65);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:24px;
+    padding:24px;
+    backdrop-filter:blur(12px);
+}
+
+.department-title{
+    font-size:30px;
+    line-height:1.3;
+    margin-bottom:10px;
+}
+
+.department-desc{
+    color:rgba(255,255,255,0.72);
+    line-height:1.6;
+}
+
+.zone-badge{
+    display:inline-block;
+    padding:6px 12px;
+    border-radius:999px;
+    background:#6c63ff33;
+    color:#9f97ff;
+    font-size:12px;
+    font-weight:700;
+    margin-bottom:14px;
+}
+/* Ảnh phòng ban */
+#detail-zone-image{
+    width: 100%;
+    max-width: 100%;
+    height: 220px;
+
+    object-fit: cover;
+
+    border-radius: 16px;
+
+    margin-top: 15px;
+    margin-bottom: 20px;
+
+    display: block;
+}
+.zone-details-content{
+    overflow-y: auto;
+    max-height: 85vh;
+    padding-right: 8px;
 }
