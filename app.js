@@ -748,34 +748,39 @@ document.querySelectorAll('.tab-panel');
 
 schoolSelect.addEventListener('change', function () {
 
+    const authorPage =
+        document.getElementById('author-page');
+
     if (this.value === 'author') {
 
-        allTabs.forEach(tab => {
-            tab.style.display = 'none';
-        });
+        // Ẩn các tab chính
+        document.getElementById('chat-tab').style.display = 'none';
+        document.getElementById('search-tab').style.display = 'none';
+        document.getElementById('services-tab').style.display = 'none';
+        document.getElementById('map-tab').style.display = 'none';
 
-        document.getElementById('author-page')
-            .style.display = 'block';
+        // Hiện trang tác giả
+        authorPage.style.display = 'block';
     }
 
     else {
 
-        allTabs.forEach(tab => {
-            tab.style.display = '';
-        });
+        // Hiện lại các tab
+        document.getElementById('chat-tab').style.display = '';
+        document.getElementById('search-tab').style.display = '';
+        document.getElementById('services-tab').style.display = '';
+        document.getElementById('map-tab').style.display = '';
 
-        document.getElementById('author-page')
-            .style.display = 'none';
+        // Ẩn trang tác giả
+        authorPage.style.display = 'none';
 
         currentSchool = this.value;
 
         updateSchoolUI(currentSchool);
 
-        // Gửi lời chào lại cho chatbot
         sendBotGreeting(currentSchool);
     }
 });
-
     function updateSchoolUI(schoolKey) {
         const config = schoolsConfig[schoolKey];
         if (!config) return;
@@ -1864,8 +1869,8 @@ window.showDepartment = function(dept) {
    PAGE SWITCH
 ========================= */
 
-const pageSelector =
-document.getElementById("page-selector");
+const schoolSelect =
+    document.getElementById('page-selector');
 
 const contentViewport =
 document.querySelector(".content-viewport");
