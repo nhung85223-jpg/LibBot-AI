@@ -2513,3 +2513,171 @@ body.light-theme .blueprint-line {
     max-height: 85vh;
     padding-right: 8px;
 }
+/* =========================
+   PAGE SELECTOR
+========================= */
+
+.page-selector-box{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    background:rgba(20,20,40,0.7);
+
+    border:1px solid rgba(255,255,255,0.1);
+
+    padding:10px 18px;
+
+    border-radius:16px;
+
+    color:white;
+}
+
+#page-selector{
+    background:transparent;
+
+    border:none;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    outline:none;
+
+    cursor:pointer;
+}
+
+/* =========================
+   AUTHOR PAGE
+========================= */
+
+.author-page-container{
+    padding:40px;
+}
+
+.author-header-card{
+
+    display:flex;
+
+    gap:30px;
+
+    align-items:center;
+
+    background:rgba(255,255,255,0.05);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    border-radius:30px;
+
+    padding:40px;
+
+    backdrop-filter:blur(20px);
+}
+
+.author-avatar{
+
+    width:220px;
+
+    height:220px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:6px solid #8b5cf6;
+}
+
+.author-info h1{
+
+    font-size:60px;
+
+    color:white;
+
+    margin-top:10px;
+}
+
+.author-info p{
+
+    color:#d1d5db;
+
+    margin-top:10px;
+
+    font-size:18px;
+}
+
+.author-badge{
+
+    background:#8b5cf6;
+
+    color:white;
+
+    padding:8px 16px;
+
+    border-radius:999px;
+
+    font-size:14px;
+
+    font-weight:600;
+}
+
+.author-tags{
+
+    display:flex;
+
+    gap:12px;
+
+    margin-top:25px;
+
+    flex-wrap:wrap;
+}
+
+.author-tags span{
+
+    background:rgba(255,255,255,0.08);
+
+    color:white;
+
+    padding:10px 16px;
+
+    border-radius:999px;
+}
+
+.author-grid{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:30px;
+
+    margin-top:30px;
+}
+
+.author-card{
+
+    background:rgba(255,255,255,0.05);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    border-radius:25px;
+
+    padding:30px;
+
+    color:white;
+
+    backdrop-filter:blur(20px);
+}
+
+.author-card h2{
+    margin-bottom:20px;
+}
+
+.author-card p,
+.author-card li{
+
+    margin-bottom:14px;
+
+    line-height:1.7;
+}

@@ -1836,3 +1836,34 @@ window.showDepartment = function(dept) {
     init();
 
 });
+/* =========================
+   PAGE SWITCH
+========================= */
+
+const pageSelector =
+document.getElementById("page-selector");
+
+const contentViewport =
+document.querySelector(".content-viewport");
+
+const authorPage =
+document.getElementById("author-page");
+
+pageSelector.addEventListener("change", function(){
+
+    if(this.value === "author"){
+
+        contentViewport.style.display = "none";
+
+        authorPage.style.display = "block";
+
+    }
+
+    else{
+
+        contentViewport.style.display = "block";
+
+        authorPage.style.display = "none";
+    }
+
+});
