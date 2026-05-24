@@ -1,0 +1,14 @@
+{
+  "name": "libbot-ai",
+  "version": "1.0.0",
+  "description": "LibBot AI - Trợ lý ảo Thư viện Quốc gia Việt Nam",
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev",
+    "start": "vercel dev"
+  },
+  "engines": {
+    "node": "20.x"
+  },
+  "dependencies": {}
+}
